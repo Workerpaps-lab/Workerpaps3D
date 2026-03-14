@@ -1,1 +1,439 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>3D Modeling Website</title>\n    <link rel="stylesheet" href="styles.css">\n    <script src="script.js" defer></script>\n</head>\n<body>\n    <header>\n        <h1>Welcome to Our 3D Modeling Showcase</h1>\n    </header>\n    <main>\n        <section id="showcase">\n            <h2>3D Model Showcase</h2>\n            <div class="cube-container">\n                <div class="cube">\n                    <div class="face front"></div>\n                    <div class="face back"></div>\n                    <div class="face left"></div>\n                    <div class="face right"></div>\n                    <div class="face top"></div>\n                    <div class="face bottom"></div>\n                </div>\n            </div>\n        </section>\n        <section id="tools">\n            <h2>Modeling Tools</h2>\n            <p>Information about the best 3D modeling tools.</p>\n        </section>\n        <section id="gallery">\n            <h2>Gallery</h2>\n            <p>Images of models and work.</p>\n        </section>\n    </main>\n    <footer>\n        <p>&copy; 2026 Workerpaps-lab</p>\n    </footer>\n</body>\n</html>\n\n<style>\nbody {\n    background-color: #121212;\n    color: #ffffff;\n    font-family: Arial, sans-serif;\n} \nh1, h2 {\n    text-align: center;\n} \n.cube-container {\n    perspective: 1000px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    height: 400px;\n} \n.cube {\n    position: relative;\n    width: 100px;\n    height: 100px;\n    transform-style: preserve-3d;\n    animation: rotate 5s infinite linear;\n} \n.face {\n    position: absolute;\n    width: 100px;\n    height: 100px;\n    background: rgba(255, 255, 255, 0.2);\n    border: 1px solid #ccc;\n} \n.front {\n    transform: translateZ(50px);\n} \n.back {\n    transform: rotateY(180deg) translateZ(50px);\n} \n.left {\n    transform: rotateY(-90deg) translateZ(50px);\n} \n.right {\n    transform: rotateY(90deg) translateZ(50px);\n} \n.top {\n    transform: rotateX(90deg) translateZ(50px);\n} \n.bottom {\n    transform: rotateX(-90deg) translateZ(50px);\n} \n@keyframes rotate {\n    from {\n        transform: rotateY(0deg);\n    }\n    to {\n        transform: rotateY(360deg);\n    }\n}\n</style>\n\n<script>\n// JavaScript for additional interactivity\ndocument.addEventListener('DOMContentLoaded', () => {\n    // Code for interactive elements goes here.\n});\n</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workerpaps3D - Studio de Modelado 3D</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #16213e 100%);
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 14, 39, 0.95);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #00d4ff;
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.2);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            margin-left: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00d4ff;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #b0b0b0;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-cube {
+            width: 250px;
+            height: 250px;
+            margin: 40px auto;
+            perspective: 1000px;
+        }
+
+        .cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 8s infinite linear;
+        }
+
+        .cube-face {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid #00d4ff;
+            background: rgba(0, 212, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .cube-front { transform: translateZ(125px); }
+        .cube-back { transform: rotateY(180deg) translateZ(125px); }
+        .cube-left { transform: rotateY(-90deg) translateZ(125px); }
+        .cube-right { transform: rotateY(90deg) translateZ(125px); }
+        .cube-top { transform: rotateX(90deg) translateZ(125px); }
+        .cube-bottom { transform: rotateX(-90deg) translateZ(125px); }
+
+        @keyframes rotateCube {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            background: linear-gradient(135deg, #00d4ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .gallery-item {
+            background: rgba(0, 212, 255, 0.05);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            border-color: #00d4ff;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .gallery-item-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .gallery-item h3 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .feature-card h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(10, 14, 39, 0.95);
+            text-align: center;
+            padding: 30px;
+            margin-top: 80px;
+            border-top: 2px solid #00d4ff;
+            color: #808080;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-cube {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .cube-face {
+                width: 180px;
+                height: 180px;
+            }
+
+            nav a {
+                margin-left: 15px;
+                font-size: 0.9rem;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Workerpaps3D</div>
+            <div>
+                <a href="#gallery">Galería</a>
+                <a href="#features">Características</a>
+                <a href="#contact">Contacto</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Crea Mundos 3D Increíbles</h1>
+            <p>Herramientas profesionales para modelado, animación y renderizado 3D de siguiente generación</p>
+            
+            <div class="hero-cube">
+                <div class="cube">
+                    <div class="cube-face cube-front">3D</div>
+                    <div class="cube-face cube-back">3D</div>
+                    <div class="cube-face cube-left">3D</div>
+                    <div class="cube-face cube-right">3D</div>
+                    <div class="cube-face cube-top">3D</div>
+                    <div class="cube-face cube-bottom">3D</div>
+                </div>
+            </div>
+
+            <a href="#" class="cta-button">Comienza Ahora</a>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2>Nuestra Galería 3D</h2>
+        <div class="gallery">
+            <div class="gallery-item">
+                <div class="gallery-item-icon">🎨</div>
+                <h3>Modelado Avanzado</h3>
+                <p>Crea modelos 3D complejos con herramientas profesionales de sculpting y retopología</p>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-icon">✨</div>
+                <h3>Materiales Realistas</h3>
+                <p>Aplica materiales y texturas para obtener renders fotorrealistas</p>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-icon">🎬</div>
+                <h3>Animación 3D</h3>
+                <p>Anima tus modelos con rigging profesional y control de movimiento</p>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-icon">💡</div>
+                <h3>Iluminación Dinámica</h3>
+                <p>Crea escenas con iluminación profesional y efectos de luz avanzados</p>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-icon">🎯</div>
+                <h3>Renderizado HD</h3>
+                <p>Renderiza en alta resolución con ray tracing y path tracing</p>
+            </div>
+            <div class="gallery-item">
+                <div class="gallery-item-icon">🚀</div>
+                <h3>Exportación Versátil</h3>
+                <p>Exporta a múltiples formatos para web, juegos y producciones</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="features">
+        <h2>Características Principales</h2>
+        <div class="features">
+            <div class="feature-card">
+                <h3>Herramientas Intuitivas</h3>
+                <p>Interface diseñada para que artistas 3D trabajen de forma rápida y eficiente sin curva de aprendizaje pronunciada.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Colaboración en Tiempo Real</h3>
+                <p>Trabaja con tu equipo simultáneamente en proyectos 3D compartidos con sincronización automática.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Biblioteca de Activos</h3>
+                <p>Acceso a miles de modelos 3D, texturas y materiales profesionales listos para usar.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Optimización de Rendimiento</h3>
+                <p>Motor optimizado para trabajar con modelos de millones de polígonos sin lag.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Plugins Extensibles</h3>
+                <p>Amplía funcionalidades con plugins y scripts personalizados para tu flujo de trabajo.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Soporte Multiplataforma</h3>
+                <p>Accede desde Windows, macOS y Linux. Tus proyectos sincronizados en la nube.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>¿Listo para Comenzar?</h2>
+        <div style="text-align: center;">
+            <p style="font-size: 1.1rem; color: #b0b0b0; margin-bottom: 30px;">
+                Únete a miles de artistas 3D que confían en nuestras herramientas
+            </p>
+            <a href="#" class="cta-button">Descargar Ahora</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Workerpaps3D - Studio de Modelado 3D. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,71 @@
+/* Base styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+header {
+    background: linear-gradient(135deg, #1c1c1c, #343434);
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 2.5em;
+    animation: fadeIn 1s ease-in;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.8em;
+    }
+}
+
+/* Animation styles */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Interactive elements */
+a {
+    color: #1e90ff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+a:hover {
+    color: #ffa500;
+}
+
+/* 3D Model Showcase */
+.model-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    perspective: 1000px;
+}
+
+.model {
+    width: 300px;
+    height: 300px;
+    transition: transform 0.5s;
+}
+.model:hover {
+    transform: rotateY(20deg);
+}
+
+.footer {
+    background: #343434;
+    color: #ffffff;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

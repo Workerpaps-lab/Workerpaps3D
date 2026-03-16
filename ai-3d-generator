@@ -42,3 +42,53 @@ f 5 6 7 8
         f.write(model)
 
     return path
+let currentModel
+
+function generateModel(){
+
+let prompt = document.getElementById("prompt").value
+
+if(currentModel){
+scene.remove(currentModel)
+}
+
+let geometry
+
+if(prompt.toLowerCase().includes("sphere")){
+geometry = new THREE.SphereGeometry(1,32,32)
+}
+else if(prompt.toLowerCase().includes("pyramid")){
+geometry = new THREE.ConeGeometry(1,2,4)
+}
+else{
+geometry = new THREE.BoxGeometry(1,1,1)
+}
+
+let material = new THREE.MeshStandardMaterial({color:0x00ffcc})
+
+currentModel = new THREE.Mesh(geometry,material)
+
+scene.add(currentModel)
+
+}
+function downloadModel(){
+
+if(!currentModel) return
+
+const exporter = new THREE.Object3D()
+
+exporter.add(currentModel)
+
+const data = JSON.stringify(exporter)
+
+const blob = new Blob([data],{type:"application/json"})
+
+const a = document.createElement("a")
+
+a.href = URL.createObjectURL(blob)
+
+a.download = "model.json"
+
+a.click()
+
+}

@@ -46,3 +46,46 @@
     </script>
 </body>
 </html>
+let scene, camera, renderer, cube
+
+function init(){
+
+scene = new THREE.Scene()
+
+camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+)
+
+renderer = new THREE.WebGLRenderer()
+
+renderer.setSize(window.innerWidth,500)
+
+document.getElementById("viewer").appendChild(renderer.domElement)
+
+const light = new THREE.DirectionalLight(0xffffff,1)
+light.position.set(5,5,5)
+
+scene.add(light)
+
+camera.position.z = 5
+
+animate()
+
+}
+
+function animate(){
+
+requestAnimationFrame(animate)
+
+if(cube){
+cube.rotation.y += 0.01
+}
+
+renderer.render(scene,camera)
+
+}
+
+init()

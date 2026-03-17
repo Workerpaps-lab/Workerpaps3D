@@ -1,47 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Model Viewer</title>
-    <style>
-        body { margin: 0; }
-        canvas { display: block; }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<meta charset="UTF-8">
+
+<title>AI 3D Generator</title>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0f172a;
+color:white;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+header{
+width:100%;
+padding:20px;
+background:#020617;
+text-align:center;
+font-size:24px;
+font-weight:bold;
+}
+
+.panel{
+margin-top:20px;
+background:#111827;
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+display:flex;
+gap:10px;
+}
+
+input{
+padding:12px;
+width:260px;
+border-radius:8px;
+border:none;
+}
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:8px;
+background:#22c55e;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+background:#16a34a;
+}
+
+#viewer{
+margin-top:20px;
+width:90%;
+height:500px;
+border-radius:12px;
+overflow:hidden;
+}
+
+</style>
+
 </head>
+
 <body>
 
+<header>AI 3D Model Generator</header>
+
+<div class="panel">
+
+<input id="prompt" placeholder="Describe el modelo 3D">
+
+<button onclick="generateModel()">Generar</button>
+
+<button onclick="downloadModel()">Descargar</button>
+
+</div>
+
+<div id="viewer"></div>
+
 <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+let scene
+let camera
+let renderer
+let model
 
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+function init(){
 
-    camera.position.z = 5;
+scene = new THREE.Scene()
 
-    function animate() {
-        requestAnimationFrame(animate);
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-        renderer.render(scene, camera);
-    }
+camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/500,
+0.1,
+1000
+)
 
-    animate();
+renderer = new THREE.WebGLRenderer({antialias:true})
 
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+renderer.setSize(window.innerWidth*0.9,500)
+
+document.getElementById("viewer").appendChild(renderer.domElement)
+
+const light = new THREE.DirectionalLight(0xffffff,1)
+light.position.set(5,5,5)
+
+scene.add(light)
+
+const ambient = new THREE.AmbientLight(0xffffff,0.5)
+scene.add(ambient)
+
+camera.position.z = 5
+
+animate()
+
+}
+
+function animate(){
+
+requestAnimationFrame(animate)
+
+if(model){
+model.rotation.y += 0.01
+}
+
+renderer.render(scene,camera)
+
+}
+
+function generateModel(){
+
+let prompt = document.getElementById("prompt").value.toLowerCase()
+
+if(model){
+scene.remove(model)
+}
+
+let geometry
+
+if(prompt.includes("sphere")){
+geometry = new THREE.SphereGeometry(1,32,32)
+}
+
+else if(prompt.includes("pyramid")){
+geometry = new THREE.ConeGeometry(1,2,4)
+}
+
+else if(prompt.includes("cylinder")){
+geometry = new THREE.CylinderGeometry(1,1,2,32)
+}
+
+else{
+geometry = new THREE.BoxGeometry(1,1,1)
+}
+
+let material = new THREE.MeshStandardMaterial({
+color:0x22c55e
+})
+
+model = new THREE.Mesh(geometry,material)
+
+scene.add(model)
+
+}
+
+function downloadModel(){
+
+if(!model) return
+
+const data = model.toJSON()
+
+const blob = new Blob(
+[JSON.stringify(data)],
+{type:"application/json"}
+)
+
+const a = document.createElement("a")
+
+a.href = URL.createObjectURL(blob)
+
+a.download = "model.json"
+
+a.click()
+
+}
+
+init()
+
 </script>
 
 </body>
+
 </html>
